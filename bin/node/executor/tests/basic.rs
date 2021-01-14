@@ -600,18 +600,12 @@ fn deploying_wasm_contract_should_work() {
 				function: Call::Timestamp(pallet_timestamp::Call::set(42 * 1000)),
 			},
 			CheckedExtrinsic {
-				signed: Some((charlie(), signed_extra(0, 0))),
-				function: Call::Contracts(
-					pallet_contracts::Call::put_code::<Runtime>(transfer_code)
-				),
-			},
-			CheckedExtrinsic {
 				signed: Some((charlie(), signed_extra(1, 0))),
 				function: Call::Contracts(
-					pallet_contracts::Call::instantiate::<Runtime>(
+					pallet_contracts::Call::instantiate_with_code::<Runtime>(
 						1 * DOLLARS + subsistence,
 						500_000_000,
-						transfer_ch,
+						transfer_code,
 						Vec::new(),
 						Vec::new(),
 					)
